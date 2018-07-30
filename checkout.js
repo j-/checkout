@@ -1,3 +1,5 @@
+const prices = require('./prices');
+
 class Checkout {
 	constructor (pricingRules) {
 		this.pricingRules = pricingRules;
@@ -13,7 +15,10 @@ class Checkout {
 	}
 
 	total () {
-		return 0;
+		return this.items
+			.map((item) => prices.get(item))
+			.filter((item) => item !== undefined)
+			.reduce((total, price) => total + price, 0);
 	}
 }
 
